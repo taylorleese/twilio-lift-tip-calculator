@@ -1,0 +1,3 @@
+Simple Twilio tip calculator application supporting both voice and SMS using 
+Scala/Lift (based off of lift-archetype-basic_2.8.1). Interesting parts are 
+located in Boot.scala and Tip.scala.
