@@ -14,18 +14,18 @@ object TipRest extends RestHelper {
   }
   
   def voiceTip = {
-	(S.param("Digits"), S.param("error")) match {
-	  case (Full(cmd), _) if cmd == "1" =>
+    (S.param("Digits"), S.param("error")) match {
+      case (Full(cmd), _) if cmd == "1" =>
         <Response>
           <Say>Goodbye.</Say>
         </Response>
-	  case (_, Full(error)) if error == "true" =>
+      case (_, Full(error)) if error == "true" =>
         <Response>
           <Gather finishOnKey="#" timeout="10" action="/api/voice/calc.xml" method="GET">
             <Say>Invalid bill amount. Please enter the bill amount and then press pound.</Say>
           </Gather>
         </Response>
-	  case (_, _) =>
+      case (_, _) =>
         <Response>
           <Gather finishOnKey="#" timeout="10" action="/api/voice/calc.xml" method="GET">
             <Say>Hello. Please enter the bill amount and then press pound.</Say>
@@ -35,10 +35,10 @@ object TipRest extends RestHelper {
   }
   
   def voiceCalc = {
-	S.param("Digits") match {
-	  case Full(amount) =>
-	    try
-	    {
+    S.param("Digits") match {
+      case Full(amount) =>
+        try
+        {
 	      val result = calculateTip(amount)
           <Response>
             <Say>15% gratuity of ${result._1} is ${result._2}. 18% gratuity of ${result._1} is ${result._3}.</Say>
@@ -47,9 +47,9 @@ object TipRest extends RestHelper {
             </Gather>
           </Response>
 	    } catch {
-	      case _ => voiceError
+          case _ => voiceError
 	    }
-	  case _ => voiceError
+      case _ => voiceError
 	}
   }
   
