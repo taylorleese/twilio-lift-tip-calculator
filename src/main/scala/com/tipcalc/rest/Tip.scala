@@ -72,7 +72,7 @@ object TipRest extends RestHelper {
   }
   
   def smsTip = {
-    val pattern = """(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?""".r
+    val pattern = """(\d{1,3}(\,\d{3})*|(\d+))(\.\d{1,2})?""".r
     
     S.param("Body") match {
       case Full(body) =>
@@ -80,7 +80,7 @@ object TipRest extends RestHelper {
           case Some(amount) =>
             val result = calculateTip(amount.matched)
             <Response>
-              <Sms>15% gratuity of ${result._1} is ${result._2}. 18% gratuity of ${result._1} is ${result._3}.</Sms>
+              <Sms>Bill Amount: ${result._1}, 15% Gratuity: ${result._2}, 18% Gratuity: ${result._3}</Sms>
             </Response>
           case _ => smsError
         }     
