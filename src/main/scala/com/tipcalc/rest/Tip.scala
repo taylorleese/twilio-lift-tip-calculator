@@ -1,5 +1,6 @@
 package com.tipcalc.rest
-import _root_.net.liftweb.util.Helpers
+
+import _root_.net.liftweb.util.Helpers
 import _root_.net.liftweb.http._
 import _root_.net.liftweb.http.rest._
 import _root_.net.liftweb.common._
