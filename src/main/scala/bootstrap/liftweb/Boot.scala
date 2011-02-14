@@ -10,6 +10,7 @@ import _root_.net.liftweb.util.Helpers
 import com.tipcalc.rest.TipRest
 
 class Boot {
+
   def boot {
     // setup the doc type
     LiftRules.docType.default.set((r: Req) => r match {
@@ -47,4 +48,5 @@ class Boot {
     LiftRules.htmlProperties.default.set((r: Req) =>
       new Html5Properties(r.userAgent))
   }
+
 }

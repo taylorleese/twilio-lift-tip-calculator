@@ -7,6 +7,7 @@ import scala.xml.Elem
 import java.math.{BigDecimal, RoundingMode}
 
 object TipRest extends RestHelper {
+
   serve {
     case "api" :: "voice" :: "tip" :: _ XmlGet _ => voiceTip
     case "api" :: "voice" :: "calc" :: _ XmlGet _ => voiceCalc
@@ -31,7 +32,7 @@ object TipRest extends RestHelper {
             <Say>Hello. Please enter the bill amount and then press pound.</Say>
           </Gather>
         </Response>
-	}
+    }
   }
   
   def voiceCalc = {
@@ -39,16 +40,16 @@ object TipRest extends RestHelper {
       case Full(amount) =>
         try
         {
-	      val result = calculateTip(amount)
+          val result = calculateTip(amount)
           <Response>
             <Say>15% gratuity of ${result._1} is ${result._2}. 18% gratuity of ${result._1} is ${result._3}.</Say>
             <Gather numDigits="1" timeout="10" action="/api/voice/tip.xml" method="GET">
               <Say>To exit, press 1. Press any other key to start over.</Say>
             </Gather>
           </Response>
-	    } catch {
+        } catch {
           case _ => voiceError
-	    }
+        }
       case _ => voiceError
 	}
   }
@@ -91,4 +92,5 @@ object TipRest extends RestHelper {
       <Sms>Error parsing bill amount. Please try again.</Sms>
     </Response>
   }
+
 }
