@@ -51,7 +51,7 @@ object TipRest extends RestHelper {
           case _ => voiceError
         }
       case _ => voiceError
-	}
+    }
   }
   
   def voiceError = {
