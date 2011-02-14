@@ -11,14 +11,14 @@ import com.tipcalc.rest.TipRest
 
 class Boot {
   def boot {
-	// setup the doc type
+    // setup the doc type
     LiftRules.docType.default.set((r: Req) => r match {
       case _ if S.skipDocType => Empty
       case _ if S.getDocType._1 => S.getDocType._2
       case _ => Full(DocType.html5)
     })
 	  
-	// setup rest api
+    // setup rest api
     LiftRules.dispatch.append(TipRest)
     
     // where to search snippet

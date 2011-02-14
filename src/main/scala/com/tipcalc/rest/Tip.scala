@@ -16,17 +16,17 @@ object TipRest extends RestHelper {
   def voiceTip = {
 	(S.param("Digits"), S.param("error")) match {
 	  case (Full(cmd), _) if cmd == "1" =>
-	    <Response>
+        <Response>
           <Say>Goodbye.</Say>
         </Response>
 	  case (_, Full(error)) if error == "true" =>
-	   	<Response>
+        <Response>
           <Gather finishOnKey="#" timeout="10" action="/api/voice/calc.xml" method="GET">
             <Say>Invalid bill amount. Please enter the bill amount and then press pound.</Say>
           </Gather>
         </Response>
 	  case (_, _) =>
-	    <Response>
+        <Response>
           <Gather finishOnKey="#" timeout="10" action="/api/voice/calc.xml" method="GET">
             <Say>Hello. Please enter the bill amount and then press pound.</Say>
           </Gather>
@@ -40,7 +40,7 @@ object TipRest extends RestHelper {
 	    try
 	    {
 	      val result = calculateTip(amount)
-	      <Response>
+          <Response>
             <Say>15% gratuity of ${result._1} is ${result._2}. 18% gratuity of ${result._1} is ${result._3}.</Say>
             <Gather numDigits="1" timeout="10" action="/api/voice/tip.xml" method="GET">
               <Say>To exit, press 1. Press any other key to start over.</Say>
@@ -54,19 +54,19 @@ object TipRest extends RestHelper {
   }
   
   def voiceError = {
-	S.redirectTo("/api/voice/tip.xml?error=true")
+    S.redirectTo("/api/voice/tip.xml?error=true")
   }
  
   def calculateTip(num: String) = {
     val amount = createBigDecimal(num)
-	val orig = "%.2f".format(amount)
-	val a15 = "%.2f".format(amount.multiply(createBigDecimal("0.15")).setScale(2, RoundingMode.HALF_EVEN))
-	val a18 = "%.2f".format(amount.multiply(createBigDecimal("0.18")).setScale(2, RoundingMode.HALF_EVEN))
-	(orig, a15, a18)
+    val orig = "%.2f".format(amount)
+    val a15 = "%.2f".format(amount.multiply(createBigDecimal("0.15")).setScale(2, RoundingMode.HALF_EVEN))
+    val a18 = "%.2f".format(amount.multiply(createBigDecimal("0.18")).setScale(2, RoundingMode.HALF_EVEN))
+    (orig, a15, a18)
   }
   
   def createBigDecimal(num: String) = {
-	new BigDecimal(num).setScale(2, RoundingMode.HALF_EVEN)
+    new BigDecimal(num).setScale(2, RoundingMode.HALF_EVEN)
   }
   
   def smsTip = {
@@ -81,8 +81,7 @@ object TipRest extends RestHelper {
               <Sms>15% gratuity of ${result._1} is ${result._2}. 18% gratuity of ${result._1} is ${result._3}.</Sms>
             </Response>
           case _ => smsError
-        }
-        
+        }     
       case _ => smsError
     }
   }
